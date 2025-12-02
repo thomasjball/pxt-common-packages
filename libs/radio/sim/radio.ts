@@ -20,6 +20,8 @@ namespace pxsim.radio {
     }
 
     export function sendRawPacket(buf: RefBuffer) {
+        // TODO: we will need to record the energy cost of this operation
+        // TODO: and store in the board state
         let cb = getResume();
         const state = pxsim.getRadioState();
         if (state.enable) {
