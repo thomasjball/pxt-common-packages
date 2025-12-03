@@ -22,6 +22,9 @@ namespace pxsim.radio {
     export function sendRawPacket(buf: RefBuffer) {
         // TODO: we will need to record the energy cost of this operation
         // TODO: and store in the board state
+        const len = buf.data.length;
+        let board = pxsim.board()
+        board.setBoardVariable("radioTxPackets", (board.getBoardVariables()["radioTxPackets"] || 0) + 1)
         let cb = getResume();
         const state = pxsim.getRadioState();
         if (state.enable) {
