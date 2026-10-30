@@ -123,7 +123,7 @@ class WAccel {
         acc = instantiateAccelerometer(accType, i2c);
         if (NULL == acc) {
             int accDetect = detectAccelerometer(i2c);
-            if (accDetect < 0) {
+            if (accDetect == 0) {
                 DMESG("acc: not detected");
             } else {
                 DMESG("acc: detected %d", accDetect);
@@ -194,12 +194,12 @@ private:
 #endif 
 
 #if PXT_SUPPORT_LSM303  
-		result = i2c->readRegister(ACCELEROMETER_TYPE_LSM303, LSM303_WHO_AM_I_A, &data, 1);
+		result = i2c->readRegister(ACCELEROMETER_TYPE_LSM303 & 0xFF, LSM303_WHO_AM_I_A, &data, 1);
 		if (result ==0)
 			return ACCELEROMETER_TYPE_LSM303;	
 #endif
 
-		return -1;
+		return 0;
 	}
 
     codal::Accelerometer* instantiateAccelerometer(int accType, codal::I2C* i2c) {
